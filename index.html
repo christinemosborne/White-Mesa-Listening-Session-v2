@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>White Mesa Watershed — Utah Division of Water Quality</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --rust: #8B2500;
+    --rust-dark: #6A1C00;
+    --sand: #F5EFE0;
+    --warm-white: #FDFAF4;
+    --slate: #2C3A47;
+    --slate-light: #4A5A6A;
+    --gold: #C89132;
+    --gold-light: #E8B84B;
+    --sage: #5D7A5E;
+    --cream: #EDE3CC;
+  }
+
+  @page { margin: 0; size: letter; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: #ccc;
+    color: var(--slate);
+    margin: 0;
+  }
+
+  /* ===== PAGE WRAPPER ===== */
+  .page {
+    width: 8.5in;
+    height: 11in;
+    margin: 0 auto;
+    background: var(--warm-white);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    page-break-after: always;
+  }
+
+  /* ============================================================
+     SHARED HEADER (used on both pages)
+  ============================================================ */
+  .header {
+    background: var(--rust);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg, transparent, transparent 18px,
+      rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 36px
+    );
+  }
+
+  .header-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 0.28in 0.5in 0.22in;
+    gap: 0.3in;
+  }
+
+  .agency-tag {
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 0.07in;
+  }
+
+  .main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28pt;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 0.05in;
+  }
+
+  .main-title span { color: var(--gold-light); }
+
+  .subtitle {
+    font-size: 11pt;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+  }
+
+  /* smaller header for page 2 */
+  .header-sm .header-inner {
+    padding: 0.22in 0.5in 0.18in;
+  }
+  .header-sm .main-title { font-size: 22pt; }
+  .header-sm .subtitle { font-size: 10pt; }
+
+  .header-emblem {
+    width: 0.95in;
+    height: 0.95in;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 2px solid rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .header-emblem svg {
+    width: 0.55in;
+    height: 0.55in;
+    fill: rgba(255,255,255,0.85);
+  }
+
+  /* ===== TAGLINE BANNER ===== */
+  .tagline-banner {
+    background: var(--slate);
+    padding: 0.09in 0.5in;
+    display: flex;
+    align-items: center;
+    gap: 0.35in;
+    flex-shrink: 0;
+  }
+
+  .tagline-item {
+    display: flex;
+    align-items: center;
+    gap: 0.09in;
+    color: #fff;
+    font-size: 9.5pt;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .tagline-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    flex-shrink: 0;
+  }
+
+  .tagline-divider {
+    width: 1px; height: 14px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* ============================================================
+     PAGE 1 LAYOUT
+  ============================================================ */
+  .p1-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 2.3in;
+    overflow: hidden;
+  }
+
+  .p1-main {
+    padding: 0.2in 0.3in 0.2in 0.5in;
+    border-right: 1px solid var(--cream);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15in;
+  }
+
+  .p1-side {
+    background: var(--rust);
+    padding: 0.2in 0.28in 0.2in 0.25in;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15in;
+  }
+
+  /* ===== INTRO ===== */
+  .intro-lead {
+    font-family: 'Playfair Display', serif;
+    font-size: 12pt;
+    color: var(--rust);
+    line-height: 1.35;
+    font-weight: 700;
+    margin-bottom: 0.07in;
+  }
+
+  .intro-body {
+    font-size: 9.5pt;
+    line-height: 1.55;
+    color: var(--slate);
+  }
+
+  .intro-block {
+    padding-bottom: 0.15in;
+    border-bottom: 2px solid var(--cream);
+  }
+
+  /* ===== SECTION ===== */
+  .section { display: flex; flex-direction: column; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.09in;
+    margin-bottom: 0.07in;
+  }
+
+  .section-bar {
+    width: 4px; height: 16px;
+    background: var(--rust);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .section-label h2 {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  .section-body {
+    font-size: 9.5pt;
+    line-height: 1.55;
+    color: var(--slate);
+    padding-left: 0.16in;
+  }
+
+  /* ===== QUESTIONS ===== */
+  .questions-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.07in;
+    padding-left: 0.16in;
+    margin-top: 0.07in;
+  }
+
+  .questions-list li {
+    display: grid;
+    grid-template-columns: 0.24in 1fr;
+    gap: 0.07in;
+    align-items: start;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    color: var(--slate);
+  }
+
+  .q-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.2;
+  }
+
+  /* ===== SIDEBAR (rust panel) ===== */
+  .side-who {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 6px;
+    padding: 0.12in 0.15in;
+  }
+
+  .side-who h3 {
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.06in;
+  }
+
+  .side-who p {
+    font-size: 8.5pt;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .side-callout {
+    background: rgba(0,0,0,0.18);
+    border-left: 3px solid var(--gold-light);
+    border-radius: 0 6px 6px 0;
+    padding: 0.12in 0.15in;
+  }
+
+  .side-callout p {
+    font-size: 9pt;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.92);
+    font-style: italic;
+  }
+
+  .side-callout strong {
+    color: var(--gold-light);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .side-contact {
+    margin-top: auto;
+    background: rgba(0,0,0,0.22);
+    border-radius: 6px;
+    padding: 0.12in 0.15in;
+  }
+
+  .side-contact h3 {
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.08in;
+  }
+
+  .side-contact .contact-org {
+    font-size: 8pt;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.02in;
+  }
+
+  .side-contact .contact-detail {
+    font-size: 7.5pt;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.45;
+    margin-bottom: 0.07in;
+  }
+
+  .side-contact .contact-detail:last-child { margin-bottom: 0; }
+
+  .side-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    margin: 0.07in 0;
+  }
+
+  /* ===== PAGE 1 FOOTER ===== */
+  .p1-footer {
+    background: var(--cream);
+    padding: 0.1in 0.5in;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 3px solid var(--rust);
+    flex-shrink: 0;
+  }
+
+  .p1-footer-left {
+    font-size: 8pt;
+    color: var(--slate-light);
+    font-style: italic;
+  }
+
+  .p1-footer-right {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  /* ============================================================
+     PAGE 2 LAYOUT — Our Commitment to You
+  ============================================================ */
+  .p2-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2.3in 1fr;
+    overflow: hidden;
+  }
+
+  .p2-side {
+    background: var(--rust);
+    padding: 0.35in 0.28in 0.3in 0.3in;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2in;
+  }
+
+  .p2-side-intro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20pt;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 0.1in;
+  }
+
+  .p2-side-intro h2 span { color: var(--gold-light); }
+
+  .p2-side-intro p {
+    font-size: 9.5pt;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .p2-about {
+    background: rgba(0,0,0,0.18);
+    border-left: 3px solid var(--gold-light);
+    border-radius: 0 6px 6px 0;
+    padding: 0.16in 0.18in;
+  }
+
+  .p2-about h3 {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.07in;
+  }
+
+  .p2-about p {
+    font-size: 9pt;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .p2-contact {
+    margin-top: auto;
+    background: rgba(0,0,0,0.22);
+    border-radius: 6px;
+    padding: 0.15in 0.18in;
+  }
+
+  .p2-contact h3 {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.1in;
+  }
+
+  .p2-contact .contact-org {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.02in;
+  }
+
+  .p2-contact .contact-detail {
+    font-size: 8pt;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+
+  .p2-contact .contact-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    margin: 0.09in 0;
+  }
+
+  .p2-main {
+    padding: 0.35in 0.5in 0.3in 0.4in;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p2-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.1in;
+    margin-bottom: 0.25in;
+    padding-bottom: 0.15in;
+    border-bottom: 2px solid var(--cream);
+  }
+
+  .p2-section-title .section-bar { background: var(--rust); }
+
+  .p2-section-title h2 {
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  /* ===== COMMITMENT ITEMS ===== */
+  .commitment-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2in;
+    flex: 1;
+  }
+
+  .commitment-item {
+    display: grid;
+    grid-template-columns: 0.45in 1fr;
+    gap: 0.15in;
+    align-items: start;
+  }
+
+  .commitment-num {
+    width: 0.38in;
+    height: 0.38in;
+    border-radius: 50%;
+    background: var(--rust);
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 14pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.02in;
+  }
+
+  .commitment-text strong {
+    display: block;
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: var(--rust);
+    margin-bottom: 0.04in;
+  }
+
+  .commitment-text p {
+    font-size: 10pt;
+    line-height: 1.6;
+    color: var(--slate);
+  }
+
+  /* ===== PAGE 2 FOOTER ===== */
+  .p2-footer {
+    background: var(--cream);
+    padding: 0.1in 0.5in;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 3px solid var(--rust);
+    flex-shrink: 0;
+  }
+
+  .p2-footer-left {
+    font-size: 8pt;
+    color: var(--slate-light);
+    font-style: italic;
+  }
+
+  .p2-footer-right {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  @media print {
+    body { background: none; }
+    .page { margin: 0; page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================================================
+     PAGE 1
+====================================================== -->
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-pattern"></div>
+    <div class="header-inner">
+      <div class="header-text">
+        <div class="agency-tag">Utah Division of Water Quality</div>
+        <div class="main-title">White Mesa &amp;<br><span>Lower San Juan Watershed Plan</span></div>
+        <div class="subtitle">Your community. Your water. Your voice in shaping what comes next.</div>
+      </div>
+      <div class="header-emblem">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 5 C30 5 12 25 12 37 C12 48.05 20.06 57 30 57 C39.94 57 48 48.05 48 37 C48 25 30 5 30 5Z"/>
+          <path d="M18 40 Q24 34 30 40 Q36 46 42 40" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAGLINE BANNER -->
+  <div class="tagline-banner">
+    <div class="tagline-item"><div class="tagline-dot"></div>Your Water</div>
+    <div class="tagline-divider"></div>
+    <div class="tagline-item"><div class="tagline-dot"></div>Your Voice</div>
+    <div class="tagline-divider"></div>
+    <div class="tagline-item"><div class="tagline-dot"></div>Your Choice</div>
+    <div class="tagline-divider"></div>
+    <div class="tagline-item"><div class="tagline-dot"></div>Your Community</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="p1-body">
+
+    <!-- MAIN COLUMN -->
+    <div class="p1-main">
+
+      <!-- INTRO -->
+      <div class="intro-block">
+        <div class="intro-lead">Your community knows this land and this water better than anyone. We're here to listen.</div>
+        <p class="intro-body">The Utah Division of Water Quality (DWQ) works to protect and improve the health of Utah's streams, lakes, wetlands, and groundwater. We are developing a nine-element watershed plan for the White Mesa area — and we cannot do it without you. A watershed plan is built <em>with</em> a community, not handed to one. Your observations and priorities shape what goes in it.</p>
+      </div>
+
+      <!-- WHAT THE PLAN DOES -->
+      <div class="section">
+        <div class="section-label">
+          <div class="section-bar"></div>
+          <h2>What a Watershed Plan Does</h2>
+        </div>
+        <p class="section-body">A watershed plan documents water quality conditions, identifies shared concerns, and outlines voluntary, community-supported actions. <strong>You decide what role you play.</strong> These plans carry no enforcement authority and cannot impose requirements on your community, tribal lands, or any individual.</p>
+      </div>
+
+      <!-- URANIUM MILL -->
+      <div class="section">
+        <div class="section-label">
+          <div class="section-bar"></div>
+          <h2>About the Uranium Mill</h2>
+        </div>
+        <p class="section-body">Concerns about groundwater contamination from the White Mesa Mill are real and deeply felt. Regulation of the mill falls under the Utah Division of Radiation Control and EPA — not DWQ. This plan cannot regulate the mill. But <strong>your water quality concerns absolutely belong here</strong>, and we want to hear them.</p>
+      </div>
+
+      <!-- QUESTIONS -->
+      <div class="section">
+        <div class="section-label">
+          <div class="section-bar"></div>
+          <h2>Questions We'd Like to Ask You</h2>
+        </div>
+        <p class="section-body">There are no right or wrong answers. Lived experience is knowledge. You don't need to be a scientist — your observations matter.</p>
+        <ol class="questions-list">
+          <li><span class="q-num">1</span><span>What water sources does your community rely on — springs, wells, streams? How have these changed over time?</span></li>
+          <li><span class="q-num">2</span><span>What have you observed about water quality? Any changes in taste, smell, color, or wildlife near water?</span></li>
+          <li><span class="q-num">3</span><span>What are your biggest water quality concerns in the White Mesa watershed, now or in the future?</span></li>
+          <li><span class="q-num">4</span><span>Are there culturally or spiritually significant water places in this watershed that you'd want protected?</span></li>
+          <li><span class="q-num">5</span><span>What traditional knowledge or practices relate to water care and stewardship in your community?</span></li>
+          <li><span class="q-num">6</span><span>What would meaningful watershed protection look like to you and your family?</span></li>
+          <li><span class="q-num">7</span><span>How would you like to stay involved as this process moves forward?</span></li>
+        </ol>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR — rust panel, matching header -->
+    <div class="p1-side">
+
+      <!-- CALLOUT QUOTE -->
+      <div class="side-callout">
+        <p>Your community has lived alongside this land and water <strong>for generations</strong>. What you've seen, what's changed, what worries you — that's exactly what we need to ensure the plan addresses your concerns.</p>
+      </div>
+
+      <!-- WHY WE'RE HERE -->
+      <div class="side-who">
+        <h3>Why We're Here</h3>
+        <p>We're here to learn from you. We want to understand your concerns, your observations, and what matters most to your community about this watershed.</p>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="side-contact">
+        <h3>Contact Us</h3>
+        <div class="contact-org">Division of Water Quality</div>
+        <div class="contact-detail">(385) 256-4317<br>cosborne@utah.gov</div>
+        <div class="side-divider"></div>
+        <div class="contact-org">Mill / Radiation Concerns</div>
+        <div class="contact-detail">DRC: (801) 536-4250<br>EPA: (800) 227-8917</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="p1-footer">
+    <div class="p1-footer-left">Watershed plans are not regulatory documents and carry no enforcement authority.</div>
+    <div class="p1-footer-right">Utah DWQ · dwq.utah.gov · Page 1</div>
+  </div>
+
+</div><!-- end page 1 -->
+
+
+<!-- ======================================================
+     PAGE 2 — Our Commitment to You
+====================================================== -->
+<div class="page">
+
+  <!-- HEADER — smaller version -->
+  <div class="header header-sm">
+    <div class="header-pattern"></div>
+    <div class="header-inner">
+      <div class="header-text">
+        <div class="agency-tag">Utah Division of Water Quality · White Mesa &amp; Lower San Juan Watershed Plan</div>
+        <div class="main-title"><span>Our Commitment</span> to You</div>
+        <div class="subtitle">These are the promises we make to the White Mesa community.</div>
+      </div>
+      <div class="header-emblem">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 5 C30 5 12 25 12 37 C12 48.05 20.06 57 30 57 C39.94 57 48 48.05 48 37 C48 25 30 5 30 5Z"/>
+          <path d="M18 40 Q24 34 30 40 Q36 46 42 40" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAGLINE BANNER -->
+  <div class="tagline-banner">
+    <div class="tagline-item"><div class="tagline-dot"></div>Your Water</div>
+    <div class="tagline-divider"></div>
+    <div class="tagline-item"><div class="tagline-dot"></div>Your Voice</div>
+    <div class="tagline-divider"></div>
+    <div class="tagline-item"><div class="tagline-dot"></div>Your Choice</div>
+    <div class="tagline-divider"></div>
+    <div class="tagline-item"><div class="tagline-dot"></div>Your Community</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="p2-body">
+
+    <!-- LEFT RUST SIDEBAR -->
+    <div class="p2-side">
+
+      <div class="p2-side-intro">
+        <h2>A plan built <span>with</span> you — not handed to you.</h2>
+        <p>We know that meaningful engagement means more than just showing up once. Here is what you can expect from us throughout this process.</p>
+      </div>
+
+      <div class="p2-contact" style="margin-top: auto;">
+        <h3>Contact Us</h3>
+        <div class="contact-org">Division of Water Quality</div>
+        <div class="contact-detail">(385) 256-4317 · cosborne@utah.gov</div>
+        <div class="contact-divider" style="height:1px;background:rgba(255,255,255,0.15);margin:0.09in 0;"></div>
+        <div class="contact-org">Mill / Radiation Concerns</div>
+        <div class="contact-detail">DRC: (801) 536-4250 · EPA: (800) 227-8917</div>
+      </div>
+
+    </div>
+
+    <!-- MAIN COMMITMENT CONTENT -->
+    <div class="p2-main">
+
+      <div class="p2-section-title">
+        <div class="section-bar"></div>
+        <h2>Five Commitments We're Making to the White Mesa Community</h2>
+      </div>
+
+      <div class="commitment-grid">
+
+        <div class="commitment-item">
+          <div class="commitment-num">1</div>
+          <div class="commitment-text">
+            <strong>We will listen without judgment.</strong>
+            <p>Your concerns and observations are valid — whether or not they fit neatly into a planning framework. We are here to hear you, not to evaluate you.</p>
+          </div>
+        </div>
+
+        <div class="commitment-item">
+          <div class="commitment-num">2</div>
+          <div class="commitment-text">
+            <strong>We will protect sensitive information.</strong>
+            <p>If you share culturally significant locations or sensitive knowledge, we will work with you on whether and how that information appears in any public document.</p>
+          </div>
+        </div>
+
+        <div class="commitment-item">
+          <div class="commitment-num">3</div>
+          <div class="commitment-text">
+            <strong>We will accurately represent your input.</strong>
+            <p>We will document what we hear and share that documentation with you for review before it is used in any plan. You have the final say on how your words are represented.</p>
+          </div>
+        </div>
+
+        <div class="commitment-item">
+          <div class="commitment-num">4</div>
+          <div class="commitment-text">
+            <strong>We will be honest about our limits.</strong>
+            <p>We cannot regulate the uranium mill. We will not overpromise. We will tell you clearly what this plan can and cannot do — and we will not pretend otherwise.</p>
+          </div>
+        </div>
+
+        <div class="commitment-item">
+          <div class="commitment-num">5</div>
+          <div class="commitment-text">
+            <strong>We will keep coming back.</strong>
+            <p>This is not a one-time visit. We are committed to ongoing engagement with the White Mesa community throughout the entire planning process — and beyond.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="p2-footer">
+    <div class="p2-footer-left">Watershed plans are not regulatory documents and carry no enforcement authority.</div>
+    <div class="p2-footer-right">Utah DWQ · dwq.utah.gov · Page 2</div>
+  </div>
+
+</div><!-- end page 2 -->
+
+</body>
+</html>
